@@ -67,6 +67,20 @@ def index():
             names = [generator.generate_name(max_length=length) for _ in range(number)]
     return render_template('index.html', categories=name_categories.keys(), names=names)
 
+@app.route('/api/generate', methods=['GET'])
+def api_generate():
+    category = request.args.get('category', 'elven')
+    length = int(request.args.get('length', 8))
+    number = int(request.args.get('number', 5))
+
+    if category not in name_categories:
+        return {"error": "Invalid category"}, 400
+    
+    generator = MarkovNameGenerator(name_categories[category], order=3)
+    names = [generator.generate_name(max_length=length) for _ in range(number)]
+    
+    return {"names": names}
+
 if __name__ == "__main__":
     args = parse_arguments()
     
