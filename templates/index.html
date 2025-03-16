@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Namoria - Fantasy Name Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            margin: 20px;
+        }
+        h1 { color: #ffcc00; }
+        form { margin: 20px auto; width: 300px; }
+        label, select, input { display: block; margin: 10px auto; }
+        button {
+            background-color: #ffcc00;
+            color: #222;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        button:hover { background-color: #ffdb4d; }
+        .result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Namoria - Fantasy Name Generator</h1>
+    <form method="post">
+        <label for="category">Choose a category:</label>
+        <select name="category" id="category">
+            {% for cat in categories %}
+                <option value="{{ cat }}">{{ cat.capitalize() }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="length">Max Name Length:</label>
+        <input type="number" name="length" id="length" value="8" min="3" max="15">
+
+        <label for="number">Number of Names:</label>
+        <input type="number" name="number" id="number" value="5" min="1" max="20">
+
+        <button type="submit">Generate Names</button>
+    </form>
+
+    {% if names %}
+        <div class="result">
+            <h2>Generated Names:</h2>
+            <ul>
+                {% for name in names %}
+                    <li>{{ name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</body>
+</html>
